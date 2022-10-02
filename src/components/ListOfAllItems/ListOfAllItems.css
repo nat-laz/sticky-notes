@@ -1,0 +1,66 @@
+@import url("https://fonts.googleapis.com/css2?family=Play&display=swap");
+
+.main {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.input-bar {
+  width: 75%;
+  height: 55px;
+  margin: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.in_btn {
+  width: 34.375rem;
+  height: 3.438;
+  border-radius: 5px;
+  display: flex;
+  flex-direction: row;
+  box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px,
+    rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+  opacity: 0.6;
+}
+
+input {
+  width: 400px;
+  border: none;
+  border-radius: 5px 0px 0px 5px;
+  font-family: "Play", sans-serif;
+  font-size: 1.5em;
+  padding-left: 20px;
+  background: transparent;
+}
+
+button {
+  border: none;
+  border-radius: 0px 5px 5px 0px;
+  font-family: "Play", sans-serif;
+  font-size: 1.2em;
+  padding: 15px;
+  cursor: pointer;
+  width: 10rem;
+  box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+  background: transparent;
+}
+
+input:focus {
+  outline: none;
+}
+
+.memo-wrapper {
+  justify-content: center;
+  display: flex;
+  align-items: center;
+  flex-flow: row wrap;
+}
+
+/* _____________________MEDIA QUERIES(SMALL DEVICES)___________________________ */
+@media screen and (max-width: 600px) {
+  .in_btn {
+    width: 25rem;
+  }
+}
