@@ -47,6 +47,10 @@ button {
   background: transparent;
 }
 
+button:hover{
+  color:rgba(0, 0, 0, 0.5)
+}
+
 input:focus {
   outline: none;
 }
