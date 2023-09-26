@@ -6,7 +6,7 @@
   align-items: center;
 }
 
-.input-bar {
+.inputBar {
   width: 75vw;
   height: 55px;
   margin: 40px;
@@ -14,7 +14,7 @@
   justify-content: center;
 }
 
-.in_btn {
+.inBtn {
   width: 34.375rem;
   height: 3.438;
   border-radius: 5px;
@@ -25,7 +25,7 @@
   opacity: 0.6;
 }
 
-input {
+.input {
   width: 400px;
   border: none;
   border-radius: 5px 0px 0px 5px;
@@ -35,7 +35,7 @@ input {
   background: transparent;
 }
 
-button {
+.button {
   border: none;
   border-radius: 0px 5px 5px 0px;
   font-family: "Play", sans-serif;
@@ -47,15 +47,15 @@ button {
   background: transparent;
 }
 
-button:hover{
-  color:rgba(0, 0, 0, 0.5)
+.button:hover {
+  color: rgba(0, 0, 0, 0.5)
 }
 
 input:focus {
   outline: none;
 }
 
-.memo-wrapper {
+.memoWrapper {
   justify-content: center;
   display: flex;
   align-items: center;
@@ -64,7 +64,7 @@ input:focus {
 
 /* _____________________MEDIA QUERIES(SMALL DEVICES)___________________________ */
 @media screen and (max-width: 600px) {
-  .in_btn {
+  .inBtn {
     width: 25rem;
   }
 }

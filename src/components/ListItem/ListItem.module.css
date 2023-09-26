@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Shadows+Into+Light&display=swap");
-.memo-item {
+
+.memoItem {
   width: 19rem;
   height: 19rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -18,12 +19,13 @@
   box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
   transition: all 0.13s ease-in;
 }
-.memo-item:hover {
+
+.memoItem:hover {
   transform: translateY(-10px) rotate(5deg);
   box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
 }
 
-.icon-wrapper {
+.iconWrapper {
   width: 100%;
   height: 20%;
   display: flex;
@@ -33,9 +35,9 @@
 }
 
 .icon,
-.icon-edit,
-.icon-save,
-.icon-delete {
+.iconEdit,
+.iconSave,
+.iconDelete {
   font-size: 1.5rem;
   margin: 0.9rem;
   position: absolute;
@@ -43,9 +45,9 @@
 }
 
 .icon:hover,
-.icon-edit:hover,
-.icon-save:hover,
-.icon-delete:hover {
+.iconEdit:hover,
+.iconSave:hover,
+.iconDelete:hover {
   color: #a2b5bb;
 }
 
@@ -53,15 +55,16 @@
   right: 4.2rem;
 }
 
-.icon-edit,
-.icon-save {
+.iconEdit,
+.iconSave {
   right: 2rem;
 }
 
 .icon {
   margin-top: 1rem;
 }
-textarea {
+
+.textarea {
   width: 17rem;
   height: 80%;
   border: none;
@@ -75,11 +78,11 @@ textarea {
   cursor: pointer;
 }
 
-textarea:focus {
+.textarea:focus {
   outline: none;
 }
 
-.checked_memo {
+.checkedMemo {
   width: 19rem;
   height: 19rem;
   box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
@@ -97,11 +100,12 @@ textarea:focus {
   border-bottom-right-radius: 120px 25px;
   box-shadow: 3px 15px 8px -10px rgba(0, 0, 0, 0.3);
   transition: all 0.13s ease-in;
-  -webkit-filter: grayscale(9%); /* Safari 6.0 - 9.0 */
+  -webkit-filter: grayscale(9%);
+  /* Safari 6.0 - 9.0 */
   filter: grayscale(90%);
 }
 
-.done-icon {
+.doneIcon {
   width: 3rem;
   height: 3rem;
   position: absolute;

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import ListItem from "../ListItem/ListItem";
-import "./ListOfAllItems.css";
+import styles from "./ListOfAllItems.module.css";
 import { v4 as uuid } from "uuid";
 
 const ListOfAllItems = () => {
@@ -52,7 +52,7 @@ const ListOfAllItems = () => {
   };
 
   const markAsDone = (id) => {
-    // console.log(id)
+
     const doneMemo = memos.map((memo) => {
       if (id === memo.id) {
         return { ...memo, state: true };
@@ -61,33 +61,31 @@ const ListOfAllItems = () => {
     });
     setMemos(doneMemo);
   };
-  // console.log(memos)
+
 
   return (
-    <div className="main">
-      <div className="input-bar">
-        <div className="in_btn">
+    <div className={styles.main}>
+      <div className={styles.inputBar}>
+        <div className={styles.inBtn}>
           <input
             value={inputValue}
-            onChange={(e) => {
-              setInputValue(e.target.value);
-            }}
+            onChange={(e) => setInputValue(e.target.value)}
             type="text"
+            className={styles.input}
           />
-          <button onClick={addMemo}>add note</button>
+          <button onClick={addMemo} className={styles.button}>add note</button>
         </div>
       </div>
-      <div className="memo-wrapper">
-        {memos &&
-          memos.map((item) => (
-            <ListItem
-              key={item.id}
-              details={item}
-              deleteMemo={deleteMemo}
-              editMemo={editMemo}
-              markAsDone={markAsDone}
-            />
-          ))}
+      <div className={styles.memoWrapper}>
+        {memos.map((item) => (
+          <ListItem
+            key={item.id}
+            details={item}
+            deleteMemo={deleteMemo}
+            editMemo={editMemo}
+            markAsDone={markAsDone}
+          />
+        ))}
       </div>
     </div>
   );

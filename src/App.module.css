@@ -1,16 +1,15 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
 
-*{
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-
-#title{
+.header {
   margin-top: 2rem;
-  font-size: 5.5vw;
+  font-size: calc(16px + 1.5vw);
   font-family: 'Permanent Marker', cursive;
   text-align: center;
+
 }
 
+@media (min-width: 1200px) {
+  .header {
+    font-size: 34px;
+  }
+}
