@@ -1,23 +1,41 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useReducer, useRef, useEffect } from "react";
 import styles from "./ListItem.module.css";
 import { RiChatDeleteLine } from "react-icons/ri";
 import { FiEdit, FiSave, FiCheckSquare } from "react-icons/fi";
 
-const ListItem = ({ details, deleteMemo, editMemo, markAsDone }) => {
-  const [editPermision, setEditPermision] = useState(false);
-  const [textareaValue, setTextAreaValue] = useState(details.content);
+const initialState = {
+  editPermission: false,
+  textareaValue: "",
+};
+
+function reducer(state, action) {
+  switch (action.type) {
+    case "SET_EDIT_PERMISSION":
+      return { ...state, editPermission: action.payload };
+    case "SET_TEXTAREA_VALUE":
+      return { ...state, textareaValue: action.payload };
+    default:
+      throw new Error();
+  }
+}
+
+const ListItem = ({ details, editMemo, deleteMemo, markAsDone }) => {
+  const [state, dispatch] = useReducer(reducer, {
+    ...initialState,
+    textareaValue: details.content,
+  });
   const textAreaRef = useRef(null);
 
-  const edit = () => setEditPermision(true);
+  const edit = () => dispatch({ type: "SET_EDIT_PERMISSION", payload: true });
 
   const saveUpdate = () => {
-    editMemo(details.id, textareaValue);
-    setEditPermision(false);
+    editMemo(details.id, state.textareaValue);
+    dispatch({ type: "SET_EDIT_PERMISSION", payload: false });
   };
 
   useEffect(() => {
-    editPermision && textAreaRef.current.focus();
-  }, [editPermision]);
+    state.editPermission && textAreaRef.current.focus();
+  }, [state.editPermission]);
 
   return (
     <div
@@ -28,9 +46,9 @@ const ListItem = ({ details, deleteMemo, editMemo, markAsDone }) => {
         <FiCheckSquare
           className={details.state ? `${styles.doneIcon} ${styles.icon}` : styles.icon}
           onClick={() => markAsDone(details.id)}
-          aria-label="Mark as done" // Accessibility: Providing alternative text
+          aria-label="Mark as done"
         />
-        {!editPermision ? (
+        {!state.editPermission ? (
           <FiEdit className={styles.iconEdit} onClick={edit} aria-label="Edit" />
         ) : (
           <FiSave className={styles.iconSave} onClick={saveUpdate} aria-label="Save" />
@@ -42,15 +60,16 @@ const ListItem = ({ details, deleteMemo, editMemo, markAsDone }) => {
         />
       </div>
       <textarea
-        value={textareaValue}
-        onChange={(e) => setTextAreaValue(e.target.value)}
+        value={state.textareaValue}
+        onChange={(e) => dispatch({ type: "SET_TEXTAREA_VALUE", payload: e.target.value })}
         ref={textAreaRef}
-        disabled={!editPermision}
-        readOnly={!editPermision}
+        disabled={!state.editPermission}
+        readOnly={!state.editPermission}
         className={styles.textarea}
       />
     </div>
   );
 };
+
 
 export default ListItem;

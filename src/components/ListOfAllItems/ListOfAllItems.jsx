@@ -1,68 +1,66 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback, useReducer } from "react";
 import ListItem from "../ListItem/ListItem";
 import styles from "./ListOfAllItems.module.css";
 import { v4 as uuid } from "uuid";
 
-const ListOfAllItems = () => {
-  const [memos, setMemos] = useState(
-    JSON.parse(localStorage.getItem("data")) === null
-      ? []
-      : JSON.parse(localStorage.getItem("data"))
-  );
+const initialState = JSON.parse(localStorage.getItem("data")) || [];
 
+const memoReducer = (state, action) => {
+  switch (action.type) {
+    case "ADD_MEMO":
+      return [...state, action.payload];
+    case "DELETE_MEMO":
+      return state.filter((memo) => memo.id !== action.payload);
+    case "EDIT_MEMO":
+      return state.map((memo) =>
+        memo.id === action.payload.id
+          ? { ...memo, content: action.payload.editedText }
+          : memo
+      );
+    case "MARK_AS_DONE":
+      return state.map((memo) =>
+        memo.id === action.payload ? { ...memo, state: true } : memo
+      );
+    default:
+      return state;
+  }
+};
+
+const ListOfAllItems = () => {
+  const [memos, dispatch] = useReducer(memoReducer, initialState);
   const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     localStorage.setItem("data", JSON.stringify(memos));
   }, [memos]);
 
-  const generateRandomHexColor = () => {
-    let charset = "0123456789ABCDEF";
-    let color = "#";
-    for (let i = 0; i < 6; i++) {
-      color += charset[Math.floor(Math.random() * 16)];
-    }
-    return color;
-  };
+  const generateRandomHexColor = () =>
+    "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
 
-  const addMemo = () => {
-    const memoDetails = {
-      id: uuid(),
-      content: inputValue,
-      bgColor: generateRandomHexColor(),
-      state: false,
-    };
-    setMemos([...memos, memoDetails]);
+  const addMemo = useCallback(() => {
+    dispatch({
+      type: "ADD_MEMO",
+      payload: {
+        id: uuid(),
+        content: inputValue,
+        bgColor: generateRandomHexColor(),
+        state: false,
+      },
+    });
     setInputValue("");
-  };
+  }, [inputValue]);
 
-  const deleteMemo = (itemId) => {
-    const filteredMemos = memos.filter((memo) => memo.id !== itemId);
-    setMemos(filteredMemos);
-  };
+  const deleteMemo = useCallback((itemId) => {
+    dispatch({ type: "DELETE_MEMO", payload: itemId });
+  }, []);
 
-  const editMemo = (id, editedText) => {
-    const editedMemo = memos.map((memo) => {
-      if (id === memo.id) {
-        return { ...memo, content: editedText };
-      }
-      return memo;
-    });
-    setMemos(editedMemo);
-  };
+  const editMemo = useCallback((id, editedText) => {
+    dispatch({ type: "EDIT_MEMO", payload: { id, editedText } });
+  }, []);
 
-  const markAsDone = (id) => {
-
-    const doneMemo = memos.map((memo) => {
-      if (id === memo.id) {
-        return { ...memo, state: true };
-      }
-      return memo;
-    });
-    setMemos(doneMemo);
-  };
-
-
+  const markAsDone = useCallback((id) => {
+    dispatch({ type: "MARK_AS_DONE", payload: id });
+  }, []);
   return (
     <div className={styles.main}>
       <div className={styles.inputBar}>
