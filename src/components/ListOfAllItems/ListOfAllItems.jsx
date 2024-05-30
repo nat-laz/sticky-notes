@@ -13,9 +13,7 @@ const memoReducer = (state, action) => {
       return state.filter((memo) => memo.id !== action.payload);
     case "EDIT_MEMO":
       return state.map((memo) =>
-        memo.id === action.payload.id
-          ? { ...memo, content: action.payload.editedText }
-          : memo
+        memo.id === action.payload.id ? { ...memo, content: action.payload.editedText } : memo
       );
     case "MARK_AS_DONE":
       return state.map((memo) =>
@@ -35,7 +33,7 @@ const ListOfAllItems = () => {
   }, [memos]);
 
   const generateRandomHexColor = () =>
-    "#" + ((Math.random() * 0xffffff) << 0).toString(16).padStart(6, "0");
+    `#${Math.floor(Math.random() * 16777215).toString(16).padStart(6, "0")}`;
 
   const addMemo = useCallback(() => {
     dispatch({
@@ -50,17 +48,10 @@ const ListOfAllItems = () => {
     setInputValue("");
   }, [inputValue]);
 
-  const deleteMemo = useCallback((itemId) => {
-    dispatch({ type: "DELETE_MEMO", payload: itemId });
+  const handleAction = useCallback((type, payload) => {
+    dispatch({ type, payload });
   }, []);
 
-  const editMemo = useCallback((id, editedText) => {
-    dispatch({ type: "EDIT_MEMO", payload: { id, editedText } });
-  }, []);
-
-  const markAsDone = useCallback((id) => {
-    dispatch({ type: "MARK_AS_DONE", payload: id });
-  }, []);
   return (
     <div className={styles.main}>
       <div className={styles.inputBar}>
@@ -71,7 +62,7 @@ const ListOfAllItems = () => {
             type="text"
             className={styles.input}
           />
-          <button onClick={addMemo} className={styles.button}>add note</button>
+          <button onClick={addMemo} className={styles.button}>Add Note</button>
         </div>
       </div>
       <div className={styles.memoWrapper}>
@@ -79,9 +70,9 @@ const ListOfAllItems = () => {
           <ListItem
             key={item.id}
             details={item}
-            deleteMemo={deleteMemo}
-            editMemo={editMemo}
-            markAsDone={markAsDone}
+            deleteMemo={() => handleAction("DELETE_MEMO", item.id)}
+            editMemo={(editedText) => handleAction("EDIT_MEMO", { id: item.id, editedText })}
+            markAsDone={() => handleAction("MARK_AS_DONE", item.id)}
           />
         ))}
       </div>
